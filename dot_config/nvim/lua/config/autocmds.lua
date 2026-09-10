@@ -35,9 +35,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- options.lua の shiftwidth=4 は C# 向け既定値。JS/TS/JSON は2スペースが慣習なので上書き
 vim.api.nvim_create_autocmd("FileType", {
   group = aug,
-  pattern = { "cs", "lua", "vim", "json", "xml", "markdown", "sh" },
+  pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "css", "html" },
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = aug,
+  pattern = {
+    "cs", "lua", "vim", "json", "xml", "markdown", "sh",
+    "go", "gomod", "gowork", "gosum",
+    "javascript", "javascriptreact", "typescript", "typescriptreact", "css", "html",
+  },
   callback = function()
     pcall(vim.treesitter.start)
   end,
