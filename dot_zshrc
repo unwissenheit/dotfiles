@@ -1,0 +1,8 @@
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export CPPFLAGS="-I/usr/local/opt/openjdk/include"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export CPPFLAGS="-I/usr/local/opt/openjdk/include"
+
+# chezmoiのエイリアス
+alias cz='chezmoi'

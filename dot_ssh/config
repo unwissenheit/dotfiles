@@ -1,0 +1,11 @@
+Host jerryfish.jp
+    HostName jerryfish.jp
+    User kinchan
+    Port 443
+    IdentityFile ~/.ssh/kinchan
+
+Host github.com
+    HostName github.com
+    User unwissenheit
+    IdentityFile ~/.ssh/id_rsa
+
