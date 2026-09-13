@@ -10,18 +10,10 @@ return {
       "go", "gomod", "gowork", "gosum",
       "javascript", "typescript", "tsx", "css", "html",
     })
-
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = {
-        "c_sharp", "lua", "json", "xml", "markdown", "bash",
-        "go", "gomod", "gowork", "gosum",
-        "javascript", "javascriptreact", "typescript", "typescriptreact", "css", "html",
-      },
-      callback = function()
-        pcall(vim.treesitter.start)
-        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-      end,
-    })
+    -- ハイライト有効化と foldexpr の設定は config/autocmds.lua 側の
+    -- FileType autocmd に一本化（ここに重複させない。かつては
+    -- "c_sharp"/"bash"/"tsx" 等パーサ名を pattern に誤指定していて
+    -- 実際の filetype ("cs"/"sh"/"typescriptreact") と一致せず発火していなかった）
   end,
 }
 

@@ -26,6 +26,9 @@ o.splitright = true
 o.splitbelow = true
 o.clipboard = "unnamedplus"
 
+-- treesitter foldexpr を有効にしても、開いた直後は全部畳まないようにする
+o.foldlevelstart = 99
+
 vim.g.have_nerd_font = true
 
 -- 診断表示。C# は警告が多いので virtual_text は控えめに

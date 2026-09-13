@@ -54,5 +54,8 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function()
     pcall(vim.treesitter.start)
+    -- treesitter ベースの折りたたみ。foldlevelstart で開いた直後は畳まない
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
   end,
 })

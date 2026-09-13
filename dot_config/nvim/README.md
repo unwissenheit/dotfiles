@@ -62,6 +62,9 @@ lazy.nvim が自動で入り、プラグインを揃えたあと再起動すれ�
         ├── treesitter.lua     ハイライト（main ブランチ）
         ├── telescope.lua      ファイル・シンボル検索
         ├── format.lua         conform + CSharpier
+        ├── gitsigns.lua       git hunk表示・ステージ・blame
+        ├── which-key.lua      leader キーマップのヒント表示
+        ├── oil.lua            ディレクトリをバッファとして編集
         └── colorscheme.lua    nightfox（duskfox）
 ```
 
@@ -105,11 +108,21 @@ Leader は `<Space>`。
 | `<leader>ff` ファイル | `<leader>fg` 全文 | `<leader>fb` バッファ | `<leader>fs` シンボル |
 |---|---|---|---|
 
+**Git（gitsigns）**
+
+| `]c` `[c` hunk移動 | `<leader>gs` ステージ | `<leader>gr` リセット | `<leader>gp` プレビュー | `<leader>gb` blame |
+|---|---|---|---|---|
+
+**ファイラー（oil.nvim）**
+
+| `-` | 現在のファイルの親ディレクトリを開く（ディレクトリバッファ内は通常の編集操作で削除・リネーム・作成ができ、`:w` で確定） |
+|---|---|
+
 **その他**
 
 `lua/config/keymaps.lua` は現状空で、上記以外の独自グローバルキーマップは
 定義していない。保存やウィンドウ移動などは Neovim 標準のキー（`:w`、`<C-w>` 系）
-をそのまま使う。
+をそのまま使う。`<leader>` を押すと which-key がグループ・キーの一覧をポップアップ表示する。
 
 ## 日常の操作
 
