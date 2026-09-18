@@ -14,6 +14,10 @@ Microsoft 公式の Roslyn 言語サーバー（VS Code の C# 拡張と同じ�
 | フォーマット | CSharpier（保存時に自動実行） |
 | 検索 | Telescope（`bin/` `obj/` は除外済み） |
 | 配色 | nightfox.nvim（duskfox） |
+| 補完・スニペット | blink.cmp + LuaSnip（friendly-snippets） |
+| 起動画面 | alpha.nvim |
+| ステータスライン | lualine.nvim |
+| LSP進行状況表示 | fidget.nvim |
 
 ## 必要なもの
 
@@ -32,6 +36,7 @@ Roslyn 言語サーバーは手動インストール不要。easy-dotnet.nvim �
 
 - Neovim 0.12 以降
 - git、ripgrep（Telescope の全文検索に使用）
+- lazygit（`<leader>gg` で起動。`brew install lazygit`）
 - make と C コンパイラ（`telescope-fzf-native.nvim` のビルドと、Treesitter
   パーサー（`main` ブランチ）の `:TSUpdate` に必要。macOS は
   `xcode-select --install` で入る）
@@ -51,20 +56,26 @@ lazy.nvim が自動で入り、プラグインを揃えたあと再起動すれ�
 ├── init.lua                   読み込み順を決めるだけ
 ├── lazy-lock.json             自動生成（git にコミットする）
 └── lua/
+    ├── bookmarks.lua          登録ディレクトリへジャンプ（M.dirs に追記して拡張）
     ├── config/
     │   ├── lazy.lua           lazy.nvim のブートストラップ
     │   ├── options.lua        インデント4、undofile、診断表示など
-    │   ├── keymaps.lua        全体で効くキーマップ（現状は空）
-    │   └── autocmds.lua       LSP のキーマップと組み込み補完の有効化
+    │   ├── keymaps.lua        全体で効くキーマップ（<leader>fp）
+    │   └── autocmds.lua       LSP のキーマップとハイライト(treesitter)の起動
     └── plugins/               ここは lazy が自動で読む
         ├── dotnet.lua         easy-dotnet（Roslyn LSP を含む）
         ├── dap.lua            デバッグ
         ├── treesitter.lua     ハイライト（main ブランチ）
         ├── telescope.lua      ファイル・シンボル検索
+        ├── completion.lua     blink.cmp + LuaSnip + friendly-snippets
         ├── format.lua         conform + CSharpier
         ├── gitsigns.lua       git hunk表示・ステージ・blame
+        ├── lazygit.lua        LazyGit をフローティングで起動
         ├── which-key.lua      leader キーマップのヒント表示
         ├── oil.lua            ディレクトリをバッファとして編集
+        ├── fidget.lua         LSP進行状況表示
+        ├── lualine.lua        ステータスライン
+        ├── alpha.lua          起動画面
         └── colorscheme.lua    nightfox（duskfox）
 ```
 
@@ -108,21 +119,40 @@ Leader は `<Space>`。
 | `<leader>ff` ファイル | `<leader>fg` 全文 | `<leader>fb` バッファ | `<leader>fs` シンボル |
 |---|---|---|---|
 
-**Git（gitsigns）**
+**Git（gitsigns / lazygit）**
 
-| `]c` `[c` hunk移動 | `<leader>gs` ステージ | `<leader>gr` リセット | `<leader>gp` プレビュー | `<leader>gb` blame |
-|---|---|---|---|---|
+| `]c` `[c` hunk移動 | `<leader>gs` ステージ | `<leader>gr` リセット | `<leader>gp` プレビュー | `<leader>gb` blame | `<leader>gg` LazyGit |
+|---|---|---|---|---|---|
 
 **ファイラー（oil.nvim）**
 
 | `-` | 現在のファイルの親ディレクトリを開く（ディレクトリバッファ内は通常の編集操作で削除・リネーム・作成ができ、`:w` で確定） |
 |---|---|
 
+**補完（blink.cmp）**
+
+`default` preset のキーバインド。スニペットは LuaSnip + friendly-snippets。
+
+| `<C-space>` メニュー表示/ドキュメント | `<Tab>` / `<S-Tab>` 選択・スニペットのプレースホルダー移動 | `<CR>` 確定 | `<C-e>` 閉じる |
+|---|---|---|---|
+
+**起動画面（alpha.nvim）**
+
+引数なしで `nvim` を起動したときだけ表示される。
+
+| `f` ファイル検索 | `g` 全文検索 | `r` 最近使ったファイル | `o` ファイラー(oil) | `p` 登録ディレクトリへ移動 | `e` 新規ファイル | `q` 終了 |
+|---|---|---|---|---|---|---|
+
+**ディレクトリブックマーク**
+
+| `<leader>fp` | `lua/bookmarks.lua` の `M.dirs` に登録した場所から選んで `:cd`＋`find_files`。場所を増やしたいときは `M.dirs` に1行足すだけ |
+|---|---|
+
 **その他**
 
-`lua/config/keymaps.lua` は現状空で、上記以外の独自グローバルキーマップは
-定義していない。保存やウィンドウ移動などは Neovim 標準のキー（`:w`、`<C-w>` 系）
-をそのまま使う。`<leader>` を押すと which-key がグループ・キーの一覧をポップアップ表示する。
+`lua/config/keymaps.lua` には `<leader>fp`（ディレクトリブックマーク）のみ定義。
+それ以外は Neovim 標準のキー（`:w`、`<C-w>` 系）をそのまま使う。
+`<leader>` を押すと which-key がグループ・キーの一覧をポップアップ表示する。
 
 ## 日常の操作
 

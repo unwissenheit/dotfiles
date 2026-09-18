@@ -27,14 +27,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- 補完を有効化（0.11+ の組み込み補完）
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = aug,
-  callback = function(ev)
-    vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = true })
-  end,
-})
-
 -- options.lua の shiftwidth=4 は C# 向け既定値。JS/TS/JSON は2スペースが慣習なので上書き
 vim.api.nvim_create_autocmd("FileType", {
   group = aug,

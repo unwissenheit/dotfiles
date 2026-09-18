@@ -1,6 +1,6 @@
 return {
   "GustavEikaas/easy-dotnet.nvim",
-  dependencies = { "nvim-lua/plenary.nvim" },
+  dependencies = { "nvim-lua/plenary.nvim", "saghen/blink.cmp" },
   ft = { "cs", "fsharp", "razor" },
   cmd = "Dotnet",
   keys = {
@@ -10,7 +10,13 @@ return {
     { "<leader>ds", "<cmd>Dotnet secrets<CR>", desc = "user secrets" },
   },
   opts = {
-    lsp = { enabled = true },
+    lsp = {
+      enabled = true,
+      -- blink.cmp のcapabilitiesをRoslynにもマージする
+      config = {
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
+      },
+    },
     test_runner = {
       viewmode = "float",
       enable_buffer_test_execution = true,

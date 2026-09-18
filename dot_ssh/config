@@ -1,7 +1,7 @@
 Host jerryfish.jp
     HostName jerryfish.jp
     User kinchan
-    Port 443
+    Port 22
     IdentityFile ~/.ssh/kinchan
 
 Host github.com
