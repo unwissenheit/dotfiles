@@ -34,6 +34,11 @@ config.audible_bell = "Disabled"
 -- IME
 config.use_ime = true
 
+-- シェル (Windows の場合のみ PowerShell を使用)
+if wezterm.target_triple:find("windows") then
+  config.default_prog = { "pwsh.exe", "-NoLogo" }
+end
+
 -- リーダーキー (tmux的なペイン操作)
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
