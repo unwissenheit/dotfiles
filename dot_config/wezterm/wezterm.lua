@@ -48,6 +48,8 @@ config.keys = {
   { key = "l", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Right") },
   { key = "j", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Down") },
   { key = "k", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Up") },
+  -- コピーモード (tmux 風: Leader + [)
+  { key = "[", mods = "LEADER", action = wezterm.action.ActivateCopyMode },
 }
 
 require("appearance").apply_to_config(config)
