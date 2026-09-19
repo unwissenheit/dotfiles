@@ -73,6 +73,7 @@ lazy.nvim が自動で入り、プラグインを揃えたあと再起動すれ�
         ├── lazygit.lua        LazyGit をフローティングで起動
         ├── which-key.lua      leader キーマップのヒント表示
         ├── oil.lua            ディレクトリをバッファとして編集
+        ├── editing.lua        mini.pairs / mini.surround / trouble
         ├── fidget.lua         LSP進行状況表示
         ├── lualine.lua        ステータスライン
         ├── alpha.lua          起動画面
@@ -124,6 +125,13 @@ Leader は `<Space>`。
 | `]c` `[c` hunk移動 | `<leader>gs` ステージ | `<leader>gr` リセット | `<leader>gp` プレビュー | `<leader>gb` blame | `<leader>gg` LazyGit |
 |---|---|---|---|---|---|
 
+**編集・診断一覧（mini.pairs / mini.surround / trouble）**
+
+| `saiw"` 囲み追加 | `sd"` 囲み削除 | `sr"'` 囲み置換 | `<leader>xx` 診断一覧 | `<leader>xr` 参照一覧 |
+|---|---|---|---|---|
+
+括弧・引用符は挿入モードで自動的に閉じる（mini.pairs）。
+
 **ファイラー（oil.nvim）**
 
 | `-` | 現在のファイルの親ディレクトリを開く（ディレクトリバッファ内は通常の編集操作で削除・リネーム・作成ができ、`:w` で確定） |
@@ -150,7 +158,8 @@ Leader は `<Space>`。
 
 **その他**
 
-`lua/config/keymaps.lua` には `<leader>fp`（ディレクトリブックマーク）のみ定義。
+`lua/config/keymaps.lua` には `<leader>fp`（ディレクトリブックマーク）と
+`<leader>e`（診断のフロート表示）のみ定義。
 それ以外は Neovim 標準のキー（`:w`、`<C-w>` 系）をそのまま使う。
 `<leader>` を押すと which-key がグループ・キーの一覧をポップアップ表示する。
 
