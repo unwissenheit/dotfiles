@@ -40,7 +40,9 @@ if wezterm.target_triple:find("windows") then
 end
 
 -- リーダーキー (tmux的なペイン操作)
-config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+-- mac は Cmd+a (Ctrl+a はシェルの行頭移動と衝突するため)、それ以外は Ctrl+a
+local leader_mods = wezterm.target_triple:find("apple") and "SUPER" or "CTRL"
+config.leader = { key = "a", mods = leader_mods, timeout_milliseconds = 1000 }
 config.keys = {
   { key = "|", mods = "LEADER|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
   { key = "-", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
